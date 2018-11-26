@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/teste', function (){
-    return view('testeview');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::get('/teste', function (){
+//    return view('testeview');
+//});
+Route::resource('work','WorkController');
+

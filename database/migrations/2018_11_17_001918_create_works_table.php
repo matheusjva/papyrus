@@ -21,7 +21,7 @@ class CreateWorksTable extends Migration
             $table->string('authors', 255);
             $table->string('year', 4);
             $table->string('jury', 255);
-            $table->string('path_file', 100);
+            $table->string('filename', 100);
             $table->timestamps();
             $table->softDeletes();
 

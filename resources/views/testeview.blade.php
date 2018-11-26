@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>e-tcc</title>
+    <title>RepWork</title>
 
     <!-- Bootstrap core CSS -->
       <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
@@ -62,7 +62,7 @@
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="image1.jpg" alt="">
           </a>
         </div>
         <div class="col-md-5">
