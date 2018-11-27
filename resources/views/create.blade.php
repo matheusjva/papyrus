@@ -81,8 +81,8 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="form-group col-md-8">
-                    <label for="year"> Ano:</label>
-                    <input class="date form-control"  type="text" id="datepicker" name="date">
+                    <label for="year"> Data:</label>
+                    <input type="date" required="required" maxlength="10" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" min="2012-01-01" max="2020-02-18" class="date form-control"  type="text" id="datepicker" name="year">
                 </div>
             </div>
             <div class="row">

@@ -18,4 +18,5 @@
 //    return view('testeview');
 //});
 Route::resource('work','WorkController');
+Route::get('download/{filename}', 'WorkController@download');
 
