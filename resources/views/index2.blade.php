@@ -2,15 +2,15 @@
 <html>
 <head>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <title>RepWork</title>
+    <title>RepWork</title>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style type="text/css">
         .card {
             border-radius: 12px;
@@ -128,10 +128,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('form')}}">Cadastrar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Buscar</a>
+                    <a class="nav-link" href="{{url('form')}}">Sobre</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Acessar</a>
@@ -142,56 +139,32 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container mb-5">
+<div class="container mb-5" style="padding-top: 100px;">
 
-    <!-- Page Heading -->
-    <h1 class="my-5">
-        <small>Cadastro de TCC's </small>
-    </h1>
-        <div class="container card">
-            <br />
-            @if (\Session::has('success'))
-                <div class="alert alert-success">
-                    <p>{{ \Session::get('success') }}</p>
-                </div><br />
-            @endif
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Descrição</th>
-                    <th>Data</th>
-                    <th>Autor(es)</th>
-                    <th>Banca</th>
-                    <th colspan="3">Ações</th>
-                </tr>
-                </thead>
-                <tbody>
+    <!-- Page Heading
+    <h1 class="my-2" style="color: #1b4b72">
+        <small>TCC's </small>
+    </h1>-->
+    <div class="container">
+        <br />
+        @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <p>{{ \Session::get('success') }}</p>
+            </div><br />
+        @endif
 
-                @foreach($works as $work)
-                    @php
-                        $date=date('Y-m-d', $work['date']);
-                    @endphp
-                    <tr>
-                        <td>{{$work['title']}}</td>
-                        <td>{{$work['description']}}</td>
-                        <td>{{$date}}</td>
-                        <td>{{$work['authors']}}</td>
-                        <td>{{$work['jury']}}</td>
-                        <td><a href="{{ url('update/form', $work['id'])}}" class="btn btn-primary">Edit</a></td>
-                        <td>
-                            <form action="{{ url('delete', $work['id'])}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </td>
-                        <td><a href="{{url('download', $work['filename'])}}" class="btn btn-info">Download</a></td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+            @foreach($works as $work)
+            <div class="row card pt-3 pr-2 pl-2 pb-1">
+                <div class="col-md-12">
+                    <h3>{{$work['title']}}</h3>
+                    <p>{{$work['description']}}</p>
+                    <a class="btn btn-primary" href="#">Visualizar</a>
+                    <br><br><p style="font-size: small"><i>Data: {{$work['year']}}</i></p>
+                </div>
+            </div>
+
+            @endforeach
+    </div>
 </div>
 <!-- Footer -->
 <footer class="logo-sfdc">

@@ -1,22 +1,16 @@
 <?php
+//==============================
+// ROTAS PARA TCCS
+//==============================
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::post('/create', 'WorkController@createWork');
+Route::get('/', 'WorkController@getWorks');
+Route::get('/form', 'WorkController@createForm');
+Route::get('/show/{work}', 'WorkController@getWork');
+Route::get('/update/form/{work}', 'WorkController@updateForm');
+Route::put('/update/{work}', 'WorkController@updateWork');
+Route::delete('/delete/{work}', 'WorkController@deleteWork');
+Route::get('/download/{filename}', 'WorkController@download');
+Route::get('/index2', 'WorkController@shows');
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-//Route::get('/teste', function (){
-//    return view('testeview');
-//});
-Route::resource('work','WorkController');
-Route::get('download/{filename}', 'WorkController@download');
 

@@ -3,29 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Work;
-use http\Env\Response;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class WorkController extends Controller
 {
     use GuardHelpers;
 
-    public function index()
+    public function shows()
     {
         $works = Work::all();
-
+        return view('index2', compact('works'));
+    }
+    public function getWorks()
+    {
+        $works = Work::all();
         return view('index', compact('works'));
     }
 
-    public function create()
+    public function getWork()
+    {
+    }
+
+    public function createForm()
     {
         return view('create');
     }
 
-    public function store(Request $request, Work $work)
+    public function createWork(Request $request, Work $work)
     {
 //        $this->requestValidate(Validator::make($request->all(),[
 //            'title' => 'required|sting|max:255',
@@ -53,15 +58,42 @@ class WorkController extends Controller
        //$work->creator_id   = $user;
         $work->save();
 
-        return redirect('/work/create')->with('success', 'Cadastrado com sucesso.');
+        return redirect('/')->with('success', 'Cadastrado com sucesso.');
     }
 
-    public function show()
+    public function updateForm($id)
     {
-       $id = Auth::id();
-
-       print_r($id);
+        $work = Work::find($id);
+        return view('editForm', compact('work'));
     }
+
+    public function updateWork(Request $request, $id)
+    {
+        $work = Work::find($id);
+
+        if($request->hasfile('filename'))
+        {
+            unlink(public_path()."/works/$work->filename");
+
+            $file = $request->file('filename');
+            $name=time().$file->getClientOriginalName();
+            $file->move(public_path().'/works/', $name);
+
+            $work->filename = $name;
+        }
+
+        //$user = Auth::user()->id;
+
+        $work->title        = $request->get('title');
+        $work->description  = $request->get('description');
+        $work->authors      = $request->get('authors');
+        $work->year         = $request->get('year');
+        $work->jury         = $request->get('jury');
+
+        //$work->creator_id   = $user;
+        $work->save();
+
+        return redirect('/')->with('success', 'TCC editado com sucesso.');    }
 
     public function download($filename)
     {
@@ -70,5 +102,16 @@ class WorkController extends Controller
             'Content-Type: application/pdf',
         );
         return response()->download($file, $filename, $header);
+    }
+
+    public function deleteWork($work)
+    {
+        $works = Work::find($work);
+        if (unlink(public_path()."/works/$works->filename")) {
+            $works->delete();
+            return redirect('/')->with('success','TCC deletado!');
+        }
+        else
+            return redirect('/')->with('alert','Não foi possível deletar o TCC!');
     }
 }

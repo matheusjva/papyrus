@@ -19,7 +19,7 @@
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">RepWork</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,13 +27,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Inicio
-                <span class="sr-only">(current)</span>
+            <li class="nav-item ">
+              <a class="nav-link" href="{{url('/')}}">Inicio
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sobre</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Cadastrar<span class="sr-only">(current)</span></a>
+
             </li>
               <li class="nav-item">
                   <a class="nav-link" href="#">Buscar</a>
@@ -55,7 +55,7 @@
       </h1>
 
       <!-- Project One -->
-        <form method="post" action="{{url('work')}}" enctype="multipart/form-data">
+        <form method="post" action="{{url('create')}}" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-2"></div>
@@ -109,9 +109,9 @@
     <!-- /.container -->
 
     <!-- Footer -->
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-light">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2018</p>
       </div>
       <!-- /.container -->
     </footer>
