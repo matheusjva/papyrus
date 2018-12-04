@@ -13,12 +13,12 @@ class WorkController extends Controller
     public function shows()
     {
         $works = Work::all();
-        return view('index2', compact('works'));
+        return view('externa', compact('works'));
     }
     public function getWorks()
     {
         $works = Work::all();
-        return view('index', compact('works'));
+        return view('admin', compact('works'));
     }
 
     public function getWork()

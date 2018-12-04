@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>RepWork</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Bootstrap CSS -->
+    <title>{{ config('app.name', 'papyrus') }}</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
     <style type="text/css">
         .card {
             border-radius: 12px;
@@ -106,6 +107,15 @@
         }
         }
     </style>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body style="background-color: #c8cbcf  ">
 <!-- Navigation -->
@@ -128,108 +138,62 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url('form')}}">Cadastrar</a>
+                    <a class="nav-link" href="#">Sobre</a>
                 </li>
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            @if (Route::has('register'))
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            @endif
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+                                    {{ __('Logout') }}
+                                </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
         </div>
+    </nav>
+    <div class="container mb-5" style="padding-top: 100px;">
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
-</nav>
 
-<!-- Page Content -->
-    <div class="container mb-5" style="padding-top: 120px;">
-
-      <!-- Project One -->
-        <form method="post" class="card pt-4 " action="{{url('create')}}" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="Title">Título:</label>
-                    <input type="text" class="form-control" name="title">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="Description">Descrição:</label>
-                    <textarea type="text-area" class="form-control" name="description" rows="4"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="Authors">Autores:</label>
-                    <input type="text" class="form-control" name="authors">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="year"> Data:</label>
-                    <input type="date" required="required" maxlength="10" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" min="2012-01-01" max="2020-02-18" class="date form-control"  type="text" id="datepicker" name="year">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="Jury">Banca:</label>
-                    <input type="text" class="form-control" name="jury">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <input type="file" name="filename">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="form-group col-md-4" style="margin-top:30px">
-                    <button type="submit" class="btn btn-success">Cadastrar</button>
-                </div>
-            </div>
-        </form>
-    </div>
+    <footer class="logo-sfdc">
+        <div class="container">
+            <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2018</p>
+        </div>
     <!-- /.container -->
+    </footer>
 
-<!-- Footer -->
-<footer class="logo-sfdc">
-    <div class="container">
-        <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2018</p>
-    </div>
-    <!-- /.container -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('#datepicker').datepicker({
-                format: "dd/mm/yyyy",
-                language: "pt-BR"
-            });
-        });
-    </script>
-  </body>
-
+</div>
+</body>
 </html>
