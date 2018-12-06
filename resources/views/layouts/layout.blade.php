@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="shortcut icon" type="imagem/x-icon" href="../../img/icon.png"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'papyrus') }}</title>
+    <title>Papyrus</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -107,21 +108,21 @@
         }
         }
     </style>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <!-- Scripts
+    <script src="{{ asset('../js/app.js') }}" defer></script>
+-->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('../css/app.css') }}" rel="stylesheet">
 </head>
 <body style="background-color: #c8cbcf  ">
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top" >
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="img/logo3.png" width="120px" height="80px"/></a>
+        <a class="navbar-brand" href="{{url('/')}}"><img src="../../img/logo3.png" width="120px" height="80px"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -133,7 +134,7 @@
                     </form>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Inicio
+                    <a class="nav-link" href="{{url('/')}}">Inicio
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -145,11 +146,11 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Entrar') }}</a>
                         </li>
                         <li class="nav-item">
                             @if (Route::has('register'))
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
                             @endif
                         </li>
                     @else
@@ -183,7 +184,7 @@
 
     <footer class="logo-sfdc">
         <div class="container">
-            <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2018</p>
+            <p class="m-0 text-center text-dark">&copy; Papyrus 2018</p>
         </div>
     <!-- /.container -->
     </footer>

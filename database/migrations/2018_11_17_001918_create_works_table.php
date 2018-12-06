@@ -17,11 +17,12 @@ class CreateWorksTable extends Migration
             $table->increments('id');
             $table->integer('creator_id')->unsigned()->nullable();
             $table->string('title', 255);
-            $table->string('description', 255);
+            $table->string('description');
+            $table->string('field');
             $table->string('authors', 255);
             $table->string('year', 25);
             $table->string('jury', 255);
-            $table->string('filename', 100);
+            $table->string('filename');
             $table->timestamps();
             $table->softDeletes();
 

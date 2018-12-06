@@ -6,8 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <link rel="shortcut icon" type="imagem/x-icon" href="../../img/icon.png"/>
 
-        <title>RepWork</title>
+        <title>Papyrus</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -111,7 +112,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top" >
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="img/logo3.png" width="120px" height="80px"/></a>
+        <a class="navbar-brand" href="{{url('/')}}"><img src="img/logo3.png" width="120px" height="80px"/></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -123,7 +124,7 @@
                     </form>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Inicio
+                    <a class="nav-link" href="{{url('/')}}">Inicio
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -204,7 +205,7 @@
 <!-- Footer -->
 <footer class="logo-sfdc">
     <div class="container">
-        <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-dark">&copy; Papyrus 2018</p>
     </div>
     <!-- /.container -->
 </footer>

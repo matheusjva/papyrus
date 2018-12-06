@@ -21,8 +21,10 @@ class WorkController extends Controller
         return view('admin', compact('works'));
     }
 
-    public function getWork()
+    public function getWork($work)
     {
+        $works = Work::find($work);
+        return view('work', compact('works'));
     }
 
     public function createForm()
@@ -58,7 +60,7 @@ class WorkController extends Controller
        //$work->creator_id   = $user;
         $work->save();
 
-        return redirect('/')->with('success', 'Cadastrado com sucesso.');
+        return redirect('/admin')->with('success', 'Cadastrado com sucesso.');
     }
 
     public function updateForm($id)
