@@ -135,11 +135,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Entrar') }}</a>
                     </li>
-                    <li class="nav-item">
-                        @if (Route::has('register'))
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>
-                        @endif
-                    </li>
+                    {{--<li class="nav-item">--}}
+                        {{--@if (Route::has('register'))--}}
+                            {{--<a class="nav-link" href="{{ route('register') }}">{{ __('Cadastre-se') }}</a>--}}
+                        {{--@endif--}}
+                    {{--</li>--}}
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('admin')}}">Admin</a>
