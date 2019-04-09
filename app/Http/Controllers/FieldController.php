@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\AuthorWork;
+use App\Field;
 use Illuminate\Http\Request;
 
-class AuthorWorkController extends Controller
+class FieldController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AuthorWorkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\AuthorWork  $authorWork
+     * @param  \App\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function show(AuthorWork $authorWork)
+    public function show(Field $field)
     {
         //
     }
@@ -52,10 +52,10 @@ class AuthorWorkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\AuthorWork  $authorWork
+     * @param  \App\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function edit(AuthorWork $authorWork)
+    public function edit(Field $field)
     {
         //
     }
@@ -64,10 +64,10 @@ class AuthorWorkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AuthorWork  $authorWork
+     * @param  \App\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AuthorWork $authorWork)
+    public function update(Request $request, Field $field)
     {
         //
     }
@@ -75,10 +75,10 @@ class AuthorWorkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\AuthorWork  $authorWork
+     * @param  \App\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AuthorWork $authorWork)
+    public function destroy(Field $field)
     {
         //
     }

@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Field;
 use App\Work;
+use App\Author;
+use App\Jury;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WorkController extends Controller
 {
     use GuardHelpers;
+    protected $author;
 
+    public function __construct(Author $author, Jury $jury){
+        $this->author = $author;
+        $this->jury = $jury;
+    }
     public function shows()
     {
         $works = Work::all();
@@ -29,7 +38,8 @@ class WorkController extends Controller
 
     public function createForm()
     {
-        return view('create');
+        $fields = Field::all();
+        return view('create', compact('fields'));
     }
 
     public function createWork(Request $request, Work $work)
@@ -53,14 +63,57 @@ class WorkController extends Controller
 
         $work->title        = $request->get('title');
         $work->description  = $request->get('description');
-        $work->authors      = $request->get('authors');
+        $work->field_id = $request->get('field');
         $work->year         = $request->get('year');
-        $work->jury         = $request->get('jury');
         $work->filename = $name;
        //$work->creator_id   = $user;
-        $work->save();
+        if($work->save())
+        {   $authors = $request->get('authors');
+            $jurys = $request->get('jury');
 
-        return redirect('/admin')->with('success', 'Cadastrado com sucesso.');
+            foreach ($authors as $authorcriar)
+            {   $authorUppercase = strtoupper($authorcriar);
+                $findAuthor = Author::where('name', '=', $authorUppercase)->first();
+                if($findAuthor == null){
+                    $authorId = DB::table('authors')->insertGetId([
+                        'name' => $authorUppercase
+                    ]);
+
+                    $author_work = DB::table('author_work')->insert([
+                        'author_id' => $authorId,
+                        'work_id' => $work->id
+                    ]);
+               }
+               else{
+                    $author_work = DB::table('author_work')->insert([
+                        'author_id' => $findAuthor->id,
+                        'work_id' => $work->id
+                ]);
+               }
+            }
+
+            foreach ($jurys as $jurycriar)
+            {   $juryUppercase = strtoupper($jurycriar);
+                $findJury = Jury::where('name', '=', $juryUppercase)->first();
+                if($findJury == null){
+                    $juryId = DB::table('juries')->insertGetId([
+                        'name' => $juryUppercase
+                    ]);
+
+                    $jury_work = DB::table('jury_work')->insert([
+                        'jury_id' => $juryId,
+                        'work_id' => $work->id
+                    ]);
+               }
+               else{
+                    $jury_work = DB::table('jury_work')->insert([
+                        'jury_id' => $findJury->id,
+                        'work_id' => $work->id
+                ]);
+               }
+            }
+            return redirect('/admin')->with('success', 'Cadastrado com sucesso.');
+        }
     }
 
     public function updateForm($id)

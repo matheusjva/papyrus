@@ -163,23 +163,46 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="form-group col-md-8">
-                    <label for="Title">Título:</label>
-                    <input type="text" class="form-control" name="title">
+                    <!-- <label for="Title">Título:</label> -->
+                    <input type="text" class="form-control" placeholder="TÍTULO" name="title">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="form-group col-md-8">
-                    <label for="Description">Descrição:</label>
-                    <textarea type="text-area" class="form-control" name="description" rows="4"></textarea>
+                    <label for="Title">Área:</label>
+                    <select type="text" class="form-control" placeholder="Área" name="field">
+
+                        @foreach($fields as $field)
+
+                            <option value={{$field['id']}}>{{$field['name']}}</option>
+
+                        @endforeach
+
+                    </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="form-group col-md-8">
-                    <label for="Authors">Autores:</label>
-                    <input type="text" class="form-control" name="authors">
+                    <!-- <label for="Description">Descrição:</label> -->
+                    <textarea type="text-area" class="form-control" name="description" placeholder="RESUMO" rows="4"></textarea>
                 </div>
+            </div>
+            <div class="row">
+            <div class="col-md-2"></div>
+                <!-- <label for="Authors">Autores:</label> -->
+
+                <div align="center "class="form-group col-md-8" id="origem">
+                    <input type="text" class="form-control" placeholder="autores" name="authors[]" style="text-transform:uppercase">
+                </div>
+                <img  src="img/adicionar.png" style="cursor: pointer;" width="20" height="23" onclick="duplicarAuthor();">
+                <img  src="img/menos.png" style="cursor: pointer;" width="20" height="23" onclick="removerAuthor(this);"> 
+                
+                <div align="center" id="destino" class="form-group col-md-12">
+	            </div>
+
+                
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
@@ -190,10 +213,15 @@
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
-                <div class="form-group col-md-8">
-                    <label for="Jury">Banca:</label>
-                    <input type="text" class="form-control" name="jury">
+                <div class="form-group col-md-8" id="origem2">
+                    <!-- <label for="Jury">Banca:</label> -->
+                    <input type="text" class="form-control" placeholder="BANCA" name="jury[]" style="text-transform:uppercase">
                 </div>
+                <img  src="img/adicionar.png" style="cursor: pointer;" width="20" height="23" onclick="duplicarBanca();">
+                <img  src="img/menos.png" style="cursor: pointer;" width="20" height="23" onclick="removerBanca(this);"> 
+                
+                <div align="center" id="destino2" class="form-group col-md-12">
+	            </div>
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
@@ -231,6 +259,92 @@
             });
         });
     </script>
+
+<!-- <script type="text/javascript">
+function AssignValues()
+{
+    //var elemento = document.getElementById("teste");
+    var i = 1;
+    for (i; i < 20; i++) {
+        if((sessionStorage.getItem("text" + i)) == null){
+            sessionStorage.setItem(("text"+i), document.form1.text.value);
+            break;
+        }
+    } 
+}
+//localStorage.setItem("text1", document.form1.text1.value);
+function Value1()
+{
+alert("Value 1 is " + sessionStorage.getItem("text1"));
+}
+
+</script>
+ <h1 id="demo"></h1>
+ <script type="text/javascript">
+        // var texto = sessionStorage.getItem("text1";);
+        // document.body.querySelector("#minhadiv").innerHTML = texto;
+        // print("teste");
+    document.getElementById("demo").innerHTML = sessionStorage.getItem("text1");
+
+</script> -->
+<script type="text/javascript">
+    
+    function duplicarAuthor(){
+        var clone = document.getElementById('origem').cloneNode(true);
+        var destino = document.getElementById('destino');
+        destino.appendChild (clone);
+        
+        var camposClonados = clone.getElementsByTagName('input');
+        
+        for(i=0; i<camposClonados.length;i++){
+            camposClonados[i].value = '';
+        }	
+    }
+
+function removerAuthor(id){
+	var node1 = document.getElementById('destino');
+	node1.removeChild(node1.childNodes[0]);
+}
+</script>
+
+<script type="text/javascript">
+    
+    function duplicarBanca(){
+        var clone = document.getElementById('origem2').cloneNode(true);
+        var destino = document.getElementById('destino2');
+        destino.appendChild (clone);
+        
+        var camposClonados = clone.getElementsByTagName('input');
+        
+        for(i=0; i<camposClonados.length;i++){
+            camposClonados[i].value = '';
+        }	
+    }
+
+function removerBanca(id){
+	var node1 = document.getElementById('destino2');
+	node1.removeChild(node1.childNodes[0]);
+}
+</script>
+
+<!-- <div id="origem" align="center">
+        <input type="text" name="text[]" placeholder="Enter text...">
+</div>
+        <input  type="button" value="Mais" style="cursor: pointer;" onclick="duplicarCampos();">
+		<input  type="button" value="menos" style="cursor: pointer;" onclick="removerCampos(this);"> 
+	
+	<div id="destino">
+	</div> -->
+
+<!-- <form name="form1">
+
+<input type="text" name="text" placeholder="Enter text...">
+<br>
+<br>
+<input id="teste" type="button" value="Assign values" onClick="AssignValues()">
+<br>
+<input type="button" value="Show value 1" onClick="Value1()">
+</form> -->
   </body>
 
 </html>
