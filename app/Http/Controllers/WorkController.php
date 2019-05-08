@@ -22,18 +22,25 @@ class WorkController extends Controller
     public function shows()
     {
         $works = Work::all();
+
         return view('externa', compact('works'));
     }
     public function getWorks()
     {
         $works = Work::all();
-        return view('admin', compact('works'));
+        $juries_works = DB::table('jury_work')->join('juries', 'jury_work.jury_id', '=', 'juries.id')->get();
+        $authors_works = DB::table('author_work')->join('authors', 'author_work.author_id', '=', 'authors.id')->get();
+
+        return view('admin', compact('works', 'authors_works', 'juries_works'));
     }
 
     public function getWork($work)
     {
         $works = Work::find($work);
-        return view('work', compact('works'));
+        $juries = DB::table('jury_work')->join('juries', 'jury_work.jury_id', '=', 'juries.id')->where('work_id', '=', $works->id )->get();
+        $authors = DB::table('author_work')->join('authors', 'author_work.author_id', '=', 'authors.id')->where('work_id', '=', $works->id)->get();
+        
+        return view('work', compact('works', 'juries', 'authors'));
     }
 
     public function createForm()

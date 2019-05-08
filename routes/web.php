@@ -13,7 +13,9 @@ Route::delete('/delete/{work}', 'WorkController@deleteWork')->middleware('auth')
 Route::get('/download/{filename}', 'WorkController@download');
 Route::get('/admin', 'WorkController@getWorks')->middleware('auth');
 
-
+Route::get('teste', function () {
+    return view('newlayout');
+});
 
 
 Auth::routes();

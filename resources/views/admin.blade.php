@@ -185,8 +185,24 @@
                         <td>{{$work['title']}}</td>
                         <td>{{$work['description']}}</td>
                         <td>{{$date}}</td>
-                        <td>{{$work['authors']}}</td>
-                        <td>{{$work['jury']}}</td>
+                        <td>
+                            @foreach($authors_works as $author_work)
+                                
+                                @if ($author_work->work_id == $work['id'])
+                                    <p>{{$author_work->name}}</p>
+                                @endif
+                                
+                            @endforeach
+                        </td>
+                        <td>
+                             @foreach($juries_works as $jury_work)
+                                
+                                @if ($jury_work->work_id == $work['id'])
+                                    <p>{{$jury_work->name}}</p>
+                                @endif
+                                
+                            @endforeach                   
+                        </td>
                         <td><a href="{{ url('update/form', $work['id'])}}" class="btn btn-primary">Edit</a></td>
                         <td>
                             <form action="{{ url('delete', $work['id'])}}" method="post">
