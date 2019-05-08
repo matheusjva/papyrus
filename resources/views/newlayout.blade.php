@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="./assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Material Kit by Creative Tim
+    Papyrus
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -33,12 +33,12 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="dropdown nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('/')}}" class="nav-link">
               <i class="material-icons">home</i> Inicio
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('login') }}">
               <i class="material-icons">person</i> Entrar
             </a>
           </li>
@@ -61,78 +61,33 @@
     <div class="main main-raised">
         <div class="section section-basic">
             <div class="container">
-                
-                <div class="section section-examples">
+                    <!-- Search form -->
+                    <form>
+                      <div class="form-group col-md-12 float-center">
+                        <input type="text" class="form-control active-purple" id="exampleFormControlInput1" placeholder="Pesquise">
+                      </div>
+                    </form>
+                  
+    <div class="section section-examples">
       <div class="container-fluid text-center">
-        <div class="row">
-          <div class="col-md-6">
-            <h3>
-                 Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card
-            </h3>
-            <!-- Tabs with icons on Card -->
-            <div class="card card-nav-tabs">
-                <div class="card-body ">
-                    <div class="tab-content text-center">
-                        <div class="tab-pane active" id="profile">
-                              <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
+        <div class="row">        
+            @foreach($works as $work)
+                <div class="col-md-6">
+                      <h3>{{$work['title']}}</h3>
+                    <div class="card card-nav-tabs">
+                        <div class="card-body ">
+                            <div class="tab-content text-center">
+                                <div class="tab-pane active" id="profile">  
+                                    <p>{{$work['description']}}</p>
+                                </div>
+                                <a class="btn btn-primary btn-lg" href="{{url('/show', $work['id'])}}">
+                                  <i class="material-icons">remove_red_eye</i> Visualizar
+                                </a>
+                            </div>    
                         </div>
-                        
-                        <a href="#" class="btn btn-primary btn-lg">
-                            <i class="material-icons">remove_red_eye</i> Visualizar
-                        </a>
                     </div>
                 </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-
-
-                        
-            <h3>
-                 Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card
-            </h3>
-            <!-- Tabs with icons on Card -->
-            <div class="card card-nav-tabs">
-                <div class="card-body ">
-                    <div class="tab-content text-center">
-                        <div class="tab-pane active" id="profile">
-                              <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
-                        </div>
-                
-                        <a href="#" class="btn btn-primary btn-lg">
-                            <i class="material-icons">remove_red_eye</i> Visualizar
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
-        <div class="col-md-6">
-
-
-                        
-            <h3>
-                 Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card Tabs with Icons on Card
-            </h3>
-            <!-- Tabs with icons on Card -->
-            <div class="card card-nav-tabs">
-                <div class="card-body ">
-                    <div class="tab-content text-center">
-                        <div class="tab-pane active" id="profile">
-                              <p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that&#x2019;s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
-                        </div>
-                        <a href="#" class="btn btn-primary btn-lg">
-                            <i class="material-icons">remove_red_eye</i> Visualizar
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
+            @endforeach 
       </div>
     </div>
 

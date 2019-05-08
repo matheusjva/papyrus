@@ -23,7 +23,7 @@ class WorkController extends Controller
     {
         $works = Work::all();
 
-        return view('externa', compact('works'));
+        return view('newlayout', compact('works'));
     }
     public function getWorks()
     {
