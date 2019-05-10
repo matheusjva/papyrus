@@ -16602,7 +16602,7 @@ footer .pull-center {
 }
 
 .card-login .form {
-  min-height: 420px;
+  min-height: 300px;
 }
 
 .card-login .social-line {
@@ -16618,7 +16618,7 @@ footer .pull-center {
 }
 
 .login-page .footer {
-  position: absolute;
+  /*position: absolute;*/
   width: 100%;
   background: transparent;
   bottom: 0;
