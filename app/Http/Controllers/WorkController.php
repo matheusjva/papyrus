@@ -6,6 +6,7 @@ use App\Field;
 use App\Work;
 use App\Author;
 use App\Jury;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,64 +64,80 @@ class WorkController extends Controller
         {
             $file = $request->file('filename');
             $name=time().$file->getClientOriginalName();
-            $file->move(public_path().'/works/', $name);
+            
+            if((Storage::disk('s3')->put($name, file_get_contents($file))))
+            {
+                //$user = Auth::user()->id;
+
+                $work->title        = $request->get('title');
+                $work->description  = $request->get('description');
+                $work->field_id = $request->get('field');
+                $work->year         = $request->get('year');
+                $work->filename = $name;
+                //$work->creator_id   = $user;
+                if($work->save())
+                {   $authors = $request->get('authors');
+                    $jurys = $request->get('jury');
+
+                    foreach ($authors as $authorcriar)
+                    {   $authorUppercase = strtoupper($authorcriar);
+                        $findAuthor = Author::where('name', '=', $authorUppercase)->first();
+                        if($findAuthor == null){
+                            $authorId = DB::table('authors')->insertGetId([
+                                'name' => $authorUppercase
+                            ]);
+
+                            $author_work = DB::table('author_work')->insert([
+                                'author_id' => $authorId,
+                                'work_id' => $work->id
+                            ]);
+                    }
+                    else{
+                            $author_work = DB::table('author_work')->insert([
+                                'author_id' => $findAuthor->id,
+                                'work_id' => $work->id
+                        ]);
+                    }
+                    }
+
+                    foreach ($jurys as $jurycriar)
+                    {   $juryUppercase = strtoupper($jurycriar);
+                        $findJury = Jury::where('name', '=', $juryUppercase)->first();
+                        if($findJury == null){
+                            $juryId = DB::table('juries')->insertGetId([
+                                'name' => $juryUppercase
+                            ]);
+
+                            $jury_work = DB::table('jury_work')->insert([
+                                'jury_id' => $juryId,
+                                'work_id' => $work->id
+                            ]);
+                    }
+                    else{
+                            $jury_work = DB::table('jury_work')->insert([
+                                'jury_id' => $findJury->id,
+                                'work_id' => $work->id
+                        ]);
+                    }
+                    }
+                    return redirect('/admin')->with('success', 'Cadastrado com sucesso.');
+                }
+                else
+                {
+                return redirect('/admin')->with('alert', 'Erro ao salvar no banco de dados..');
+                }
+            }
+            else
+            {
+            return redirect('/admin')->with('alert', 'Erro ao enviar o arquivo para o s3.');
+            }
+        }
+        else
+        {
+            return redirect('/admin')->with('alert', 'Erro com o arquivo.');
         }
 
-        //$user = Auth::user()->id;
-
-        $work->title        = $request->get('title');
-        $work->description  = $request->get('description');
-        $work->field_id = $request->get('field');
-        $work->year         = $request->get('year');
-        $work->filename = $name;
-       //$work->creator_id   = $user;
-        if($work->save())
-        {   $authors = $request->get('authors');
-            $jurys = $request->get('jury');
-
-            foreach ($authors as $authorcriar)
-            {   $authorUppercase = strtoupper($authorcriar);
-                $findAuthor = Author::where('name', '=', $authorUppercase)->first();
-                if($findAuthor == null){
-                    $authorId = DB::table('authors')->insertGetId([
-                        'name' => $authorUppercase
-                    ]);
-
-                    $author_work = DB::table('author_work')->insert([
-                        'author_id' => $authorId,
-                        'work_id' => $work->id
-                    ]);
-               }
-               else{
-                    $author_work = DB::table('author_work')->insert([
-                        'author_id' => $findAuthor->id,
-                        'work_id' => $work->id
-                ]);
-               }
-            }
-
-            foreach ($jurys as $jurycriar)
-            {   $juryUppercase = strtoupper($jurycriar);
-                $findJury = Jury::where('name', '=', $juryUppercase)->first();
-                if($findJury == null){
-                    $juryId = DB::table('juries')->insertGetId([
-                        'name' => $juryUppercase
-                    ]);
-
-                    $jury_work = DB::table('jury_work')->insert([
-                        'jury_id' => $juryId,
-                        'work_id' => $work->id
-                    ]);
-               }
-               else{
-                    $jury_work = DB::table('jury_work')->insert([
-                        'jury_id' => $findJury->id,
-                        'work_id' => $work->id
-                ]);
-               }
-            }
-            return redirect('/admin')->with('success', 'Cadastrado com sucesso.');
-        }
+        
     }
 
     public function updateForm($id)
@@ -135,12 +152,10 @@ class WorkController extends Controller
 
         if($request->hasfile('filename'))
         {
-            unlink(public_path()."/works/$work->filename");
-
+            Storage::delete($work->filename);
             $file = $request->file('filename');
             $name=time().$file->getClientOriginalName();
-            $file->move(public_path().'/works/', $name);
-
+            Storage::disk('s3')->put($name, file_get_contents($file));
             $work->filename = $name;
         }
 
@@ -159,21 +174,24 @@ class WorkController extends Controller
 
     public function download($filename)
     {
-        $file = public_path()."/works/$filename";
-        $header = array(
-            'Content-Type: application/pdf',
-        );
-        return response()->download($file, $filename, $header);
+        return $file = Storage::download($filename); 
     }
 
     public function deleteWork($work)
     {
         $works = Work::find($work);
-        if (unlink(public_path()."/works/$works->filename")) {
-            $works->delete();
-            return redirect('/')->with('success','TCC deletado!');
+        $excluirArquivo = Storage::delete($works->filename);
+        if ($excluirArquivo) {
+            if($works->delete())
+            {
+                return redirect('/')->with('success','TCC deletado!');
+            }
+            else
+            {
+                return redirect('/')->with('alert','Não foi possível deletar o TCC do banco de dados.');
+            }
         }
         else
-            return redirect('/')->with('alert','Não foi possível deletar o TCC!');
+            return redirect('/')->with('alert','Não foi possível deletar o TCC do s3.');
     }
 }
