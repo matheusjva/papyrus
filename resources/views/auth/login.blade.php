@@ -38,11 +38,6 @@
               <i class="material-icons">home</i> Inicio
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">
-              <i class="material-icons">person</i> Entrar
-            </a>
-          </li>
         </ul>
       </div>
     </div>

@@ -17,7 +17,7 @@
     <link href="/css/material-kit.css?v=2.0.5" rel="stylesheet" />
 </head>
 
-<body class="index-page sidebar-collapse">
+<body class="profile-page sidebar-collapse">
 <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
     <div class="container">
         <div class="navbar-translate">
@@ -42,20 +42,38 @@
                         <i class="material-icons">add</i> Cadastrar
                     </a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <i class="material-icons">face</i>
+                        {{ Auth::user()->name }} 
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    <i class="material-icons"> exit_to_app</i>
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="page-header header-filter clear-filter purple-filter" data-parallax="true" style="height: 100vh; background-image: url('/img/books4.jpg');">
+<div class="page-header header-filter" data-parallax="true" style="height: 100vh; background-image: url('/img/books4.jpg');">
+   
 
 </div>
-<div class="main main-raised">
-    <div class="section section-basic">
-        <div class="container">
+<div class="main main-raised" style="margin-top: -450px;">
+    <div class="section" style="padding: 30px;">
 
 <!-- Search form -->
-<div class="section section-examples">
     @if (\Session::has('success'))
         <div class="alert alert-success">
             <div class="container">
@@ -72,7 +90,7 @@
     @endif
     <div class="container-fluid text-center">
         <div class="row">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover table-responsive">
                 <thead class="thead-dark">
                 <tr>
                     <th>Título</th>
@@ -127,7 +145,7 @@
             </table>
         </div>
     </div>
-</div>
+
         <footer class="footer" data-background-color="black">
             <div class="container">
                 <div class="copyright float-center">

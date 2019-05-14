@@ -37,11 +37,38 @@
               <i class="material-icons">home</i> Inicio
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">
-              <i class="material-icons">person</i> Entrar
-            </a>
-          </li>
+          @guest
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('login') }}">
+                <i class="material-icons">person</i> Entrar
+              </a>
+            </li>
+          @else 
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ url('admin') }}">
+                        <i class="material-icons">dashboard</i> Gerenciar
+                    </a>
+            </li>
+            <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <i class="material-icons">face</i>
+                        {{ Auth::user()->name }} 
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    <i class="material-icons"> exit_to_app</i>
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            @endguest
         </ul>
       </div>
     </div>
@@ -73,12 +100,18 @@
         <div class="row">        
             @foreach($works as $work)
                 <div class="col-md-6">
-                      <h3>{{$work['title']}}</h3>
+                    @php
+                        $tituloTruncado = substr($work['title'], 0, 50) . "...";
+                    @endphp
+                      <h3>{{$tituloTruncado}}</h3>
                     <div class="card card-nav-tabs">
                         <div class="card-body ">
                             <div class="tab-content text-center">
-                                <div class="tab-pane active" id="profile">  
-                                    <p>{{$work['description']}}</p>
+                                <div class="tab-pane active" id="profile">
+                                  @php
+                                   $resumoTruncado = substr($work['description'], 0, 200) . "...";
+                                  @endphp  
+                                    <p>{{$resumoTruncado}}</p>
                                 </div>
                                 <a class="btn btn-primary btn-lg" href="{{url('/show', $work['id'])}}">
                                   <i class="material-icons">remove_red_eye</i> Visualizar
