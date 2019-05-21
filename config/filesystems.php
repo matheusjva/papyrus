@@ -57,10 +57,19 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'AKIA5ORUDO4OCNQWK7UK',
-            'secret' => '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',
-            'region' => 'us-east-1',
-            'bucket' => 'papyrusifrn',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+        ],
+
+        's3' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
 
